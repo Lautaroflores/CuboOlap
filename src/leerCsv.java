@@ -15,10 +15,10 @@ import java.util.Scanner;
 
 public class leerCsv {
    
-    static String fechas = "fechas.csv";
-    static String productos = "productos.csv";
-    static String ventas = "ventas.csv";
-    static String puntos_venta = "puntos_venta.csv";
+    static String fechas = "src/archivos/fechas.csv";
+    static String productos = "src/archivos/productos.csv";
+    static String ventas = "src/archivos/ventas.csv";
+    static String puntos_venta = "src/archivos/puntos_venta.csv";
 
 
     //Lee el csv y lo guarda en una lista
