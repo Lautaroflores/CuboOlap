@@ -1,15 +1,11 @@
-/* Necesito crear un cubo olap. Esta clase va a leer los csv
- * fechas, productos, puntos_venta y la fact table 'ventas'
- * y los va a procesar para seleccionar los datos que necesito 
- * en el orden jerarquico que necesite 
+/* Esta clase va a leer los csv
+ * fechas, productos, puntos_venta y la fact table 'ventas'.
  */
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
-//Comentame cada bloque de codigo para que sepas que hace cada cosa
 
 //Clase que lee los csv
 
@@ -59,9 +55,7 @@ public class leerCsv {
         List<String[]> dimensionData3 = readCSV(puntos_venta);
         List<String[]> factData = readCSV(ventas);
     
-        // Aquí puedes manipular los datos según sea necesario, como crear tablas en una base de datos o realizar operaciones con los datos.
-    
-        // Por ejemplo, podrías imprimir los datos para verificar si se leyeron correctamente:
+        //Chequeo como salió todo
         System.out.println("Dimension 1 Data:");
         printData(dimensionData1);
     
