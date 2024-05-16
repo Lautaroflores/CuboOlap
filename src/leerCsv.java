@@ -1,5 +1,3 @@
-/* Necesito crear un cubo olap. Esta clase va a leer los csv
- * fechas, productos, puntos_venta y la fact table 'ventas'*/
 
 import java.io.File;
 import java.io.IOException;
