@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-//Clase que lee los csv
+//Clase que lee los csv.
 
-public class LeerCsv {
+public class LectorCsv {
    
     static String fechas = "src/archivos/fechas.csv";
     static String productos = "src/archivos/productos.csv";
