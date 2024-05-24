@@ -1,10 +1,11 @@
-
+import java.util.Scanner;
 
 import olapcube.Proyeccion;
 import olapcube.configuration.ConfigCubo;
 import olapcube.configuration.ConfigDimension;
 import olapcube.configuration.ConfigHechos;
 import olapcube.estructura.Cubo;
+import olapcube.metricas.*;
 
 public class AppCubo {
 
@@ -28,9 +29,28 @@ public class AppCubo {
     }
 
     public static void main(String[] args) {
-        ConfigCubo config = crearConfigCubo();
+        Scanner scanner = new Scanner(System.in); // Crear un objeto Scanner
 
-        Cubo cubo = Cubo.crearFromConfig(config);
+        // Crear una instancia de Opciones pasando el objeto Scanner
+        Opciones opciones = new Opciones(scanner);
+
+        // Usar Opciones para seleccionar una medida
+        Medida medidaSeleccionada = opciones.seleccionarMedida();
+        if (medidaSeleccionada == null) {
+            // Salir del programa si la medida seleccionada es null
+            System.out.println("La medida seleccionada no es válida.");
+            scanner.close();
+            return;
+        }
+
+        // Configuración del cubo
+        ConfigCubo config = crearConfigCubo();
+        Cubo cubo = Cubo.crearFromConfig(config); // Crear la instancia del cubo antes de configurar la medida
+        cubo.setMedidas(medidaSeleccionada.getClass().getSimpleName().toLowerCase(), medidaSeleccionada);
+
+        // Cerrar el objeto Scanner al finalizar
+        scanner.close();
+        
         System.out.println("Cubo creado: " + cubo);
 
         // Proyecciones

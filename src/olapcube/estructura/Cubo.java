@@ -10,28 +10,30 @@ import java.util.Set;
 import olapcube.Proyeccion;
 import olapcube.configuration.ConfigCubo;
 import olapcube.configuration.ConfigDimension;
-import olapcube.metricas.Medida;
-import olapcube.metricas.Suma;
+
+import olapcube.metricas.*;
 
 /**
  * Representa un cubo OLAP.
  */
 public class Cubo {
     private Map<String, Dimension> dimensiones; // Mapeo de nombres de dimensión al objeto de la dimensión
-    private Map<String, Medida> medidas;        // Mapeo de nombres de medida al objeto de la medida
+    private static Map<String, Medida> medidas;        // Mapeo de nombres de medida al objeto de la medida
     private List<Celda> celdas;                 // Lista de celdas del cubo
     private List<String> nombresHechos;         // Nombres de los hechos (columnas con valores del dataset de hechos)
-
+    
     private Cubo() {
         dimensiones = new HashMap<>();
         celdas = new ArrayList<>();
         nombresHechos = new ArrayList<>();
 
-        // TODO: Externalizar esta configuracion
+        // TODO: Externalizar esta configuracion !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         medidas = new HashMap<>();
-        medidas.put("suma", new Suma());
+        //medidas.put("count", new Count());
     }
-
+    public void setMedidas(String nombre, Medida medida){
+        medidas.put(nombre, medida);
+    }
     /**
      * Método constructor que permite crear un cubo a partir de una configuración
      * 
