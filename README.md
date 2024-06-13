@@ -52,8 +52,11 @@ observaciones (si las hay).
 Las medidas a computar en cada celda por el momento son:
 
 ● count: contar la cantidad de hechos
+
 ● min: el valor de hecho mínimo
+
 ● max: el valor de hecho máximo
+
 ● sum: la suma de los valores de los hechos
 
 ## Creación del cubo
@@ -85,11 +88,17 @@ y que existan los miembros referenciados, de lo contrario arrojar excepción.
 Se debe poder conocer la siguiente información sobre una instancia de cubo dada:
 
 ● Nombre del cubo
+
 ● Cantidad y nombres de dimensiones
+
 ● Información de cada dimensión:
+
   ○ Niveles jerárquicos
+  
   ○ Miembros (elementos) de la dimensión en formato tabular
+  
 ● Listado de hechos contenidos en cada celda (ventas, costo, unidades, etc)
+
 ● Medidas representadas en cada celda
 
 ## Visualización
@@ -99,9 +108,11 @@ dimensiones se especifican para mostrar.
 
 ● 0 dimensiones: Se muestra una única celda donde se agrupan (reducen)
 totalmente todas las dimensiones existentes.
+
 ● 1 dimensión: Se muestra una tabla con dos columnas, la primera corresponde al
 valor (miembro) de la dimensión, y la segunda a la celda asociada con mediciones
 calculadas con la agrupación (reducción) total de las otras dimensiones del cubo.
+
 ● 2 dimensiones: Se muestra una tabla A x B, donde A corresponde a los miembros
 de la primera dimensión y B a los miembros de la segunda dimensión, es decir, las
 etiquetas de filas son los miembros de A y las etiquetas de columnas son los
@@ -170,16 +181,27 @@ columnas que permiten identificar los niveles en esa dimensión de cada miembro.
 nivel más bajo, el miembro de la dimensión se identifica por su campo descriptivo.
 
 ● Productos: Descripción de cada producto.
+
   ○ Archivo: productos.csv
+  
   ○ Niveles: Categoría -> Subcategoría -> Producto
+  
   ○ Campo descriptivo: producto
+  
 ● Fechas: Descripción de cada fecha.
+
   ○ Archivo: fechas.csv
+  
   ○ Niveles: Año -> Quarter -> Mes -> Día
+  
   ○ Campo descriptivo: fecha
+  
 ● Puntos de Venta: Descripción de cada punto de venta.
+
   ○ Archivo: puntos_venta.csv
+  
   ○ Niveles: Región -> País -> Provincia -> Ciudad
+  
   ○ Campo descriptivo: punto_venta
   
 ## Hechos
@@ -187,7 +209,9 @@ nivel más bajo, el miembro de la dimensión se identifica por su campo descript
 Representa la venta de cierta cantidad de:
 
 ● un mismo producto
+
 ● en un punto de venta
+
 ● en una fecha (día)
 
 Archivo: ventas.csv
@@ -195,8 +219,11 @@ Archivo: ventas.csv
 Los campos de la fuente de datos de hechos son:
 
 ● id_producto: Key asociada a la dimensión Producto.
+
 ● id_fecha: Key asociada a la dimensión Fecha.
+
 ● id_punto_venta: Key asociada a la dimensión Punto de Venta.
+
 ● cantidad: productos vendidos
 ● valor_unitario: importe unitario del producto vendido
 ● valor_total: importe total de la venta
