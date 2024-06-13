@@ -129,18 +129,26 @@ public class Opciones {
             System.out.println("1. POS, 2. Fechas, 3. Productos");
             int dimDice = scanner.nextInt();
             scanner.nextLine();
-        
-            System.out.println("Ingrese los valores específicos para la dimensión " + dimensiones[dimDice - 1] + " separados por comas:");
             Dimension dimSeleccionada = cubo.getDimension(dimensiones[dimDice - 1]);
+            
+            System.out.println("Ingrese los valores específicos para la dimensión " + dimensiones[dimDice - 1] + " separados por comas:");
             if (dimSeleccionada != null) {
                 System.out.println("Valores únicos de la dimensión " + dimensiones[dimDice - 1] + ": " + Arrays.toString(dimSeleccionada.getValores()));
             } else {
-                System.out.println("Valor no válido");
+                System.out.println("Dimension no válida");
                 return;
             }
         
             String valores = scanner.nextLine();
             String[] valoresSeleccionados = valores.split(",");
+            
+            boolean valoresValidos = Arrays.stream(valoresSeleccionados).allMatch(valor -> Arrays.asList(dimSeleccionada.getValores()).contains(valor.trim()));
+
+            if (!valoresValidos) {
+                System.out.println("Alguno de los valores ingresados no es válido.");
+                return; // Retorna sin cerrar el scanner para permitir más interacciones
+            }
+            
         
             // Aquí se debería modificar o crear un método en Cubo para filtrar por múltiples valores
            cubo.filtrarDimension(dimensiones[dimDice - 1], valoresSeleccionados);
@@ -154,15 +162,25 @@ public class Opciones {
             if (dimSeleccionada2 != null) {
                 System.out.println("Valores únicos de la dimensión " + dimensiones[dim2 - 1] + ": " + Arrays.toString(dimSeleccionada2.getValores()));
             } else {
-                System.out.println("Valor no válido");
+                System.out.println("Dimension no válida");
                 return;
             }
         
             String valores2 = scanner.nextLine();
             String[] valoresSeleccionados2 = valores2.split(",");
+
+            boolean valoresValidos2 = Arrays.stream(valoresSeleccionados).allMatch(valor -> Arrays.asList(dimSeleccionada.getValores()).contains(valor.trim()));
+
+            if (!valoresValidos2) {
+                System.out.println("Alguno de los valores ingresados no es válido.");
+                return; // Retorna sin cerrar el scanner para permitir más interacciones
+            }
+
         
             // Similar al paso anterior, filtrar la segunda dimensión por múltiples valores
-             cubo.filtrarDimension(dimensiones[dim2 - 1], valoresSeleccionados2);
+            cubo.filtrarDimension(dimensiones[dim2 - 1], valoresSeleccionados2);
+            cubo.proyectar().print(dimensiones[dimDice- 1], dimensiones[dim2 - 1]);
+            scanner.close();
         }
     }
 
