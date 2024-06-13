@@ -165,7 +165,7 @@ public class Opciones {
              cubo.filtrarDimension(dimensiones[dim2 - 1], valoresSeleccionados2);
         }
     }
-}
+
     
 
 
