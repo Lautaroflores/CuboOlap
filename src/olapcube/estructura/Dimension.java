@@ -66,16 +66,18 @@ public class Dimension {
         return nueva;
     }
 
+    public void filtrar (String valor) {
+        filtrar(new String[] {valor});
+    }
 
-    public void filtrar(String valor) {
-        // for (String valorDim : valoresToCeldas.keySet()) {
-        //     if (valorDim != valor) {
-        //         valoresToCeldas.remove(valorDim);
-        //     }
-        // }
 
+    public void filtrar(String[] valores) {
         HashMap<String, Set<Integer>> nuevosValores = new HashMap<>();
-        nuevosValores.put(valor, valoresToCeldas.get(valor));
+        for (String valor: valores) {
+
+            nuevosValores.put(valor, valoresToCeldas.get(valor));
+        }
+
         valoresToCeldas = nuevosValores;
     }
 

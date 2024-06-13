@@ -78,12 +78,13 @@ public class AppCubo {
                 scanner.close();
             }
             if (opcion == 4) {
-              // ...
-              Proyeccion proyeccion = cubo.proyectar();
-              proyeccion.print("POS");
 
-              proyeccion.seleccionarHecho("costo");
-              proyeccion.print("POS", "Fechas");
+              // ...
+                Proyeccion proyeccion = cubo.proyectar();
+                proyeccion.print("POS");
+
+                proyeccion.seleccionarHecho("costo");
+                proyeccion.print("POS", "Fechas");
                 Cubo cuboSlice = cubo.slice("Fechas", "2017");
 
                 // Aquí puedes imprimir el cuboSlice o hacer lo que necesites con él
@@ -91,9 +92,22 @@ public class AppCubo {
                 scanner.close();
             }
 
+            if (opcion == 5) {
+
+                Proyeccion proyeccion = cubo.proyectar();
+                proyeccion.print("POS");
+
+                proyeccion.seleccionarHecho("costo");
+                proyeccion.print("POS", "Fechas");
+                Cubo cuboDice = cubo.dice("Fechas", new String[] {"2017", "2018"});
+                cuboDice.dice("POS", new String[] {"Canada", "France"}).proyectar().print("POS", "Fechas");
+            }
+
             else {
                 System.out.println("Opción no válida");
             }
+
+            
         }
         catch(Error error ){
         System.out.println("Error: " + error);    

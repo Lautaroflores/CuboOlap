@@ -198,8 +198,9 @@ public class Cubo {
         return new Proyeccion(this);
     }
 
-    public Cubo slice (String nombreDim, String valor) {
-        
+
+    private Cubo  copiar() {
+
         Cubo cubo = new Cubo();
         
         cubo.dimensiones = new HashMap<>();
@@ -213,12 +214,52 @@ public class Cubo {
         cubo.medidas = this.medidas;
         cubo.celdas = this.celdas;
         cubo.nombresHechos = this.nombresHechos;
+        return cubo;
 
-        cubo.dimensiones.get(nombreDim).filtrar(valor);
-       
+    }
+
+    public Cubo slice (String nombreDim, String valor) {
+
+        
+        Cubo cubo = this.copiar();
+
+        cubo.dimensiones.get(nombreDim).filtrar(valor);       
 
         return cubo;
     }
+    //TODO: Acomodar el dice para no repetirlo tanto
+
+    public Cubo dice (String nombreDim, String[] valores) {
+        
+         Cubo cubo = this.copiar();
+        
+         cubo.dimensiones.get(nombreDim).filtrar(valores);       
+ 
+         return cubo;
+     }
+
+     public Cubo dice (String nombreDim1, String[] valores1, String nombreDim2, String[] valores2) {
+        
+        Cubo cubo = this.copiar();
+
+       
+        cubo.dimensiones.get(nombreDim1).filtrar(valores1);      
+        cubo.dimensiones.get(nombreDim2).filtrar(valores2); 
+
+        return cubo;
+    }
+    public Cubo dice (String nombreDim1, String[] valores1, String nombreDim2, String[] valores2, String nombreDim3, String[] valores3) {
+        
+        Cubo cubo = this.copiar();
+       
+        cubo.dimensiones.get(nombreDim1).filtrar(valores1);   
+        cubo.dimensiones.get(nombreDim2).filtrar(valores2);
+        cubo.dimensiones.get(nombreDim3).filtrar(valores3);    
+
+        return cubo;
+    }
+
+ 
 
 }
   
