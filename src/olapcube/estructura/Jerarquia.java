@@ -26,10 +26,11 @@ public class Jerarquia {
     
         switch (dimension) {
             case "POS":
+            
                 jerarquiaSeleccionada =opcion - 1;
                 break;
             case "TIEMPO":
-                
+            
                 jerarquiaSeleccionada = opcion - 1;
                 break;
             case "PRODUCTO":

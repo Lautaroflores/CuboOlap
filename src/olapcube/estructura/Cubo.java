@@ -17,7 +17,7 @@ import olapcube.metricas.*;
  * Representa un cubo OLAP.
  */
 public class Cubo {
-    private Map<String, Dimension> dimensiones; // Mapeo de nombres de dimensión al objeto de la dimensión
+    public Map<String, Dimension> dimensiones; // Mapeo de nombres de dimensión al objeto de la dimensión
     private  Map<String, Medida> medidas;        // Mapeo de nombres de medida al objeto de la medida
     private List<Celda> celdas;                 // Lista de celdas del cubo
     private List<String> nombresHechos;         // Nombres de los hechos (columnas con valores del dataset de hechos)
@@ -26,8 +26,6 @@ public class Cubo {
         dimensiones = new HashMap<>();
         celdas = new ArrayList<>();
         nombresHechos = new ArrayList<>();
-
-        // TODO: Externalizar esta config!
         medidas = new HashMap<>();
        
 
@@ -73,18 +71,7 @@ public class Cubo {
       
         return cubo;
     }
-    //Borre toda esta manera de aplicar filtros
-    // private void inicializarFiltros () {
-    //     for (Dimension dimension : dimensiones.values()) {
-    //         Set<String> conjuntoValores = new HashSet<>();
-            
-    //         for(String valor: dimension.getValores()){
-    //             conjuntoValores.add(valor);
-    //         }
-            
-    //         filtros.put(dimension.getNombre(), conjuntoValores);
-    //     }
-
+   
     public List<String> getNombresHechos() {
         return nombresHechos;
     }
@@ -199,7 +186,7 @@ public class Cubo {
     }
 
 
-    private Cubo  copiar() {
+    public Cubo  copiar() {
 
         Cubo cubo = new Cubo();
         
@@ -218,48 +205,14 @@ public class Cubo {
 
     }
 
-    public Cubo slice (String nombreDim, String valor) {
-
-        
-        Cubo cubo = this.copiar();
-
-        cubo.dimensiones.get(nombreDim).filtrar(valor);       
-
-        return cubo;
+    public void filtrarDimension(String nombreDimension, String[] valores) {
+        Dimension dim = getDimension(nombreDimension);
+        if (dim != null) {
+            dim.filtrar(valores);
+        } else {
+            throw new IllegalArgumentException("Dimension no encontrada: " + nombreDimension);
+        }
     }
-    //TODO: Acomodar el dice para no repetirlo tanto
-
-    public Cubo dice (String nombreDim, String[] valores) {
-        
-         Cubo cubo = this.copiar();
-        
-         cubo.dimensiones.get(nombreDim).filtrar(valores);       
- 
-         return cubo;
-     }
-
-     public Cubo dice (String nombreDim1, String[] valores1, String nombreDim2, String[] valores2) {
-        
-        Cubo cubo = this.copiar();
-
-       
-        cubo.dimensiones.get(nombreDim1).filtrar(valores1);      
-        cubo.dimensiones.get(nombreDim2).filtrar(valores2); 
-
-        return cubo;
-    }
-    public Cubo dice (String nombreDim1, String[] valores1, String nombreDim2, String[] valores2, String nombreDim3, String[] valores3) {
-        
-        Cubo cubo = this.copiar();
-       
-        cubo.dimensiones.get(nombreDim1).filtrar(valores1);   
-        cubo.dimensiones.get(nombreDim2).filtrar(valores2);
-        cubo.dimensiones.get(nombreDim3).filtrar(valores3);    
-
-        return cubo;
-    }
-
- 
 
 }
   

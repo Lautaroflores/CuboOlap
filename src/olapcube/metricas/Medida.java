@@ -24,4 +24,6 @@ public abstract class Medida {
      */
     public abstract double calcular(List<Double> valores);
 
+    
+
 }
