@@ -54,5 +54,8 @@ public class ConfigHechos {
     public Integer getColumnaHecho(String nombre) {
         return hechosColumnas.get(nombre);
     }
-
+@Override
+    public String toString() {
+        return "ConfigHechos [hechosColumnas=" + hechosColumnas + "]";
+    }
 }

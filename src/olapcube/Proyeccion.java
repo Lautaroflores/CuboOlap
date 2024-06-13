@@ -29,6 +29,7 @@ public class Proyeccion {
         this.cubo = cubo;
         this.hecho = cubo.getNombresHechos().get(0);    // Selecciona el primer hecho por defecto
         this.medida = cubo.getMedidas().get(0);         // Selecciona la primera medida por defecto
+        
     }
 
     public void seleccionarHecho(String hecho) {
@@ -122,5 +123,7 @@ public class Proyeccion {
             }
             System.out.println();
         }
+
+    
     }
 }

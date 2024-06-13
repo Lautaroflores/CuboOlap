@@ -63,4 +63,9 @@ public class ConfigDimension {
     public int getColumnaFkHechos() {
         return columnaFkHechos;
     }
+@Override
+    public String toString() {
+        return "ConfigDimension [nombre=" + nombre + ", datasetReader=" + datasetReader + ", columnaKey=" + columnaKey
+                + ", columnaValor=" + columnaValor + ", columnaFkHechos=" + columnaFkHechos + "]";
+    }
 }

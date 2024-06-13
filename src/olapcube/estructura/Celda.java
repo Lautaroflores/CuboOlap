@@ -28,7 +28,7 @@ import java.util.Map;
  */
 public class Celda {
     private Map<String, List<Double>> hechos;   // Mapeo de nombres de hecho a valores
-    
+    private String nivel;
     public Celda() {
         hechos = new HashMap<>();
     }
@@ -102,6 +102,10 @@ public class Celda {
      */
     public boolean mismosHechos(Celda otraCelda) {
         return this.hechos.keySet().equals(otraCelda.getHechos().keySet());
+    }
+
+    public Object getNivel() {
+        return nivel;
     }
 
 }

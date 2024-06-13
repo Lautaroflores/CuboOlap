@@ -32,4 +32,6 @@ public class ConfigCubo {
     public String getNombre() {
         return nombre;
     }
+
+    
 }

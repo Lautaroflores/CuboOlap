@@ -2,10 +2,12 @@ package olapcube.estructura;
 
 import java.util.HashMap;
 import java.util.HashSet;
+
 import java.util.Map;
 import java.util.Set;
 
 import olapcube.configuration.ConfigDimension;
+
 
 /**
  * Clase que representa una dimension de un cubo OLAP.
@@ -14,8 +16,12 @@ public class Dimension {
     private String nombre;                              // Nombre de la dimension
     private Map<String, Set<Integer>> valoresToCeldas;  // Mapeo de valores de la dimensión a celdas en el cubo
     private Map<Integer, String> idToValores;           // Mapeo de ids (pk) de la dimensión a valores
-    private int columnaFkHechos;                        // Columna que contiene la clave foránea en la tabla de los hechos
+    private int columnaFkHechos;  
+                          // Columna que contiene la clave foránea en la tabla de los hechos
     
+  
+
+
     /**
      * Constructor de la clase
      * 
@@ -44,6 +50,33 @@ public class Dimension {
         }
 
         return dim;
+    }
+
+    public Dimension copiar() {
+        Dimension nueva = new Dimension(this.nombre);
+        nueva.valoresToCeldas = new HashMap<>();
+        for (String valor : this.valoresToCeldas.keySet()) {
+            nueva.valoresToCeldas.put(valor, this.valoresToCeldas.get(valor));
+        }
+
+        nueva.idToValores = this.idToValores;
+        nueva.columnaFkHechos = this.columnaFkHechos;  
+        
+
+        return nueva;
+    }
+
+
+    public void filtrar(String valor) {
+        // for (String valorDim : valoresToCeldas.keySet()) {
+        //     if (valorDim != valor) {
+        //         valoresToCeldas.remove(valorDim);
+        //     }
+        // }
+
+        HashMap<String, Set<Integer>> nuevosValores = new HashMap<>();
+        nuevosValores.put(valor, valoresToCeldas.get(valor));
+        valoresToCeldas = nuevosValores;
     }
 
     @Override
@@ -83,4 +116,5 @@ public class Dimension {
         }
         valoresToCeldas.get(idToValores.get(idValor)).add(indiceCelda);
     }
+
 }

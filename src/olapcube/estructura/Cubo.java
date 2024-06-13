@@ -18,7 +18,7 @@ import olapcube.metricas.*;
  */
 public class Cubo {
     private Map<String, Dimension> dimensiones; // Mapeo de nombres de dimensión al objeto de la dimensión
-    private static Map<String, Medida> medidas;        // Mapeo de nombres de medida al objeto de la medida
+    private  Map<String, Medida> medidas;        // Mapeo de nombres de medida al objeto de la medida
     private List<Celda> celdas;                 // Lista de celdas del cubo
     private List<String> nombresHechos;         // Nombres de los hechos (columnas con valores del dataset de hechos)
     
@@ -27,9 +27,10 @@ public class Cubo {
         celdas = new ArrayList<>();
         nombresHechos = new ArrayList<>();
 
-        // TODO: Externalizar esta configuracion !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // TODO: Externalizar esta config!
         medidas = new HashMap<>();
-        //medidas.put("count", new Count());
+       
+
     }
     public void setMedidas(String nombre, Medida medida){
         medidas.put(nombre, medida);
@@ -69,9 +70,20 @@ public class Cubo {
 
             indiceCelda++;
         }
-
+      
         return cubo;
     }
+    //Borre toda esta manera de aplicar filtros
+    // private void inicializarFiltros () {
+    //     for (Dimension dimension : dimensiones.values()) {
+    //         Set<String> conjuntoValores = new HashSet<>();
+            
+    //         for(String valor: dimension.getValores()){
+    //             conjuntoValores.add(valor);
+    //         }
+            
+    //         filtros.put(dimension.getNombre(), conjuntoValores);
+    //     }
 
     public List<String> getNombresHechos() {
         return nombresHechos;
@@ -85,8 +97,8 @@ public class Cubo {
         return new ArrayList<>(medidas.keySet());
     }
 
-    public Medida getMedida(String nombre) {
-        return medidas.get(nombre);
+    public Medida getMedida(String medida) {
+        return medidas.get(medida);
     }
 
     public Dimension getDimension(String nombre) {
@@ -185,4 +197,29 @@ public class Cubo {
     public Proyeccion proyectar() {
         return new Proyeccion(this);
     }
+
+    public Cubo slice (String nombreDim, String valor) {
+        
+        Cubo cubo = new Cubo();
+        
+        cubo.dimensiones = new HashMap<>();
+        
+
+        for (Dimension dimension : this.dimensiones.values()) {
+            cubo.dimensiones.put(dimension.getNombre(), dimension.copiar());
+        }
+
+       
+        cubo.medidas = this.medidas;
+        cubo.celdas = this.celdas;
+        cubo.nombresHechos = this.nombresHechos;
+
+        cubo.dimensiones.get(nombreDim).filtrar(valor);
+       
+
+        return cubo;
+    }
+
 }
+  
+
