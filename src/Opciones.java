@@ -2,6 +2,8 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 import olapcube.Proyeccion;
+import olapcube.acciones.SeleccionarHecho;
+import olapcube.configuration.ConfigHechos;
 import olapcube.acciones.SeleccionarDimension;
 import olapcube.acciones.Slice;
 import olapcube.estructura.Cubo;
@@ -12,10 +14,17 @@ import olapcube.acciones.DrillDown;
 
 public class Opciones {
     private Scanner scanner;
+    private ConfigHechos configHechos;
     String[] dimensiones = {"POS", "Fechas", "Productos"};
     
     public Opciones(Scanner scanner) {
         this.scanner = scanner;
+        this.configHechos = ConfigHechos.configCSV("src/olapcube/datasets-olap/ventas.csv", new String[] {"cantidad", "valor_unitario", "valor_total", "costo"}, new Integer[] {3, 4, 5, 6});
+    }
+
+    public void iniciarSeleccionHecho() {
+        SeleccionarHecho seleccionarHecho = new SeleccionarHecho(configHechos, scanner);
+        seleccionarHecho.ejecutar();
     }
 
     public Medida seleccionarMedida() {
@@ -59,7 +68,7 @@ public class Opciones {
         SeleccionarDimension seleccionarDimension = new SeleccionarDimension(cubo, proyeccion);
         seleccionarDimension.ejecutar(dimensiones[dim - 1]);
 
-        proyeccion.seleccionarHecho("costo");
+        proyeccion.seleccionarHecho();
 
         proyeccion.print(dimensiones[dim - 1]);
     }
@@ -81,11 +90,11 @@ public class Opciones {
         SeleccionarDimension seleccionarDimension = new SeleccionarDimension(cubo, proyeccion);
         seleccionarDimension.ejecutar(dimensiones[dim1 - 1], dimensiones[dim2 - 1]);
 
-        proyeccion.seleccionarHecho("costo");
+        proyeccion.seleccionarHecho();
         proyeccion.print(dimensiones[dim1 - 1], dimensiones[dim2 - 1]);
     }
 
-    public void seleccionarDimensionParaSlice(Cubo cubo) {
+    public void seleccionarDimensionParaSlice(Cubo cubo, Proyeccion proyeccion) {
         System.out.println("Ingrese la dimensión para realizar el Slice:");
         System.out.println("1. POS, 2. Fechas, 3. Productos");
         int dimSlice = scanner.nextInt();
@@ -114,11 +123,11 @@ public class Opciones {
             System.out.println("Las dimensiones seleccionadas no son válidas");
             return;
         }
-
+        proyeccion.seleccionarHecho();
         cuboSlice.proyectar().print(dimensiones[dimSlice - 1], dimensiones[dim2 - 1]);
     }
 
-    public void seleccionarDimensionParaDice(Cubo cubo) {
+    public void seleccionarDimensionParaDice(Cubo cubo, Proyeccion proyeccion) {
         System.out.println("Ingrese la dimensión para realizar el Dice:");
         System.out.println("1. POS, 2. Fechas, 3. Productos");
         int dimDice = scanner.nextInt();
@@ -167,41 +176,47 @@ public class Opciones {
             System.out.println("Alguno de los valores ingresados no es válido.");
             return;
         }
-    
+        proyeccion.seleccionarHecho();
         cubo.filtrarDimension(dimensiones[dim2 - 1], valoresSeleccionados2);
         cubo.proyectar().print(dimensiones[dimDice - 1], dimensiones[dim2 - 1]);
     }
     
-    public void seleccionarDimensionParaRollUp(Cubo cubo) {
+    public void seleccionarDimensionParaRollUp(Cubo cubo, Proyeccion proyeccion) {
         System.out.println("Seleccione la dimensión para aplicar Roll-Up:");
         System.out.println("1. POS, 2. Fechas, 3. Productos");
         int opcion = scanner.nextInt();
         scanner.nextLine();
         String dimension = dimensiones[opcion - 1];
-        RollUp rollUp = new RollUp(cubo);
-        rollUp.aplicar(dimension);
-        System.out.println("Se aplicó Roll-Up en la dimensión: " + dimension);
         Dimension dim = cubo.getDimension(dimension);
+        
         if (dim != null) {
             System.out.println("Nivel actual de la dimensión " + dimension + ": " + dim.getNivelActual());
+            RollUp rollUp = new RollUp(cubo);
+            rollUp.aplicar(dimension);
+            proyeccion.seleccionarHecho();
             proyeccionDimensiones(cubo, dim);
+
         }
     }
     
-    public void seleccionarDimensionParaDrillDown(Cubo cubo) {
+    public void seleccionarDimensionParaDrillDown(Cubo cubo, Proyeccion proyeccion) {
         System.out.println("Seleccione la dimensión para aplicar Drill-Down:");
         System.out.println("1. POS, 2. Fechas, 3. Productos");
         int opcion = scanner.nextInt();
         scanner.nextLine();
         String dimension = dimensiones[opcion - 1];
-        DrillDown drillDown = new DrillDown(cubo);
-        drillDown.aplicar(dimension);
-        System.out.println("Se aplicó Drill-Down en la dimensión: " + dimension);
         Dimension dim = cubo.getDimension(dimension);
+
         if (dim != null) {
-            System.out.println("Nivel actual de la dimensión " + dimension + ": " + dim.getNivelActual());
+            String nivelActualAntesDeDrillDown = dim.getNivelActual();
+            System.out.println("Nivel actual de la dimensión " + dimension + ": " + nivelActualAntesDeDrillDown);
+            
+            DrillDown drillDown = new DrillDown(cubo);
+            drillDown.aplicar(dimension);
+            proyeccion.seleccionarHecho();
             proyeccionDimensiones(cubo, dim);
         }
+
     }
     
     private void proyeccionDimensiones(Cubo cubo, Dimension dimension) {
@@ -211,6 +226,7 @@ public class Opciones {
         int dimSecundaria = scanner.nextInt();
         scanner.nextLine();
         String dimensionSecundaria = dimensiones[dimSecundaria - 1];
+        proyeccion.seleccionarHecho();
         proyeccion.print(dimension.getNombre(), dimensionSecundaria);
     }
     }

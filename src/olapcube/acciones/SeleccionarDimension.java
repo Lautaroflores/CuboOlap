@@ -26,7 +26,6 @@ public class SeleccionarDimension {
             return;
         }
 
-        // Muestra la proyección de la dimensión única
     
     }
     //Metodo para la proyección en 2D
@@ -38,5 +37,7 @@ public class SeleccionarDimension {
             System.out.println("Dimensiones no válidas");
             return;
         }
+
+    
     }
 }

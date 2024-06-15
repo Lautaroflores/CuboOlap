@@ -31,21 +31,23 @@ public class AppCubo {
             Scanner scanner = new Scanner(System.in);
             Opciones opciones = new Opciones(scanner);
 
-            Medida medidaSeleccionada = opciones.seleccionarMedida();
-            if (medidaSeleccionada == null) {
-                System.out.println("La medida seleccionada no es válida.");
-                scanner.close();
-                return;
-            }
-
+            
             ConfigCubo config = crearConfigCubo();
             
             Cubo cubo = Cubo.crearFromConfig(config);
-            cubo.setMedidas(medidaSeleccionada.getClass().getSimpleName().toLowerCase(), medidaSeleccionada);
-            System.out.println("Medida seleccionada: " + medidaSeleccionada.getClass().getSimpleName());
             
             boolean continuar = true;
             while (continuar) {
+                opciones.iniciarSeleccionHecho();
+                
+                Medida medidaSeleccionada = opciones.seleccionarMedida();
+                if (medidaSeleccionada == null) {
+                    System.out.println("La medida seleccionada no es válida.");
+                    scanner.close();
+                    return;
+                }
+                cubo.setMedidas(medidaSeleccionada.getClass().getSimpleName().toLowerCase(), medidaSeleccionada);
+                System.out.println("Medida seleccionada: " + medidaSeleccionada.getClass().getSimpleName());
                 System.out.println("Seleccione lo que quiere probar:");
                 System.out.println("1. Proyección en 1D\n2. Proyección en 2D \n3. DrillDown \n4. RollUp \n5. Slice \n6. Dice");
                 int opcion = scanner.nextInt();
@@ -58,16 +60,16 @@ public class AppCubo {
                         opciones.seleccionarDosDimensiones(cubo, proyeccion);
                         break;
                     case 3:
-                        opciones.seleccionarDimensionParaDrillDown(cubo);
+                        opciones.seleccionarDimensionParaDrillDown(cubo, proyeccion);
                         break;
                     case 4:
-                        opciones.seleccionarDimensionParaRollUp(cubo);
+                        opciones.seleccionarDimensionParaRollUp(cubo, proyeccion);
                         break;
                     case 5:
-                        opciones.seleccionarDimensionParaSlice(cubo);
+                        opciones.seleccionarDimensionParaSlice(cubo, proyeccion);
                         break;
                     case 6: 
-                        opciones.seleccionarDimensionParaDice(cubo);
+                        opciones.seleccionarDimensionParaDice(cubo, proyeccion);
                         break;
                     default:
                         System.out.println("Opción no válida.");

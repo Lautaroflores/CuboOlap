@@ -2,6 +2,7 @@ package olapcube;
 
 import java.util.Arrays;
 
+import olapcube.acciones.SeleccionarHecho;
 import olapcube.estructura.Celda;
 import olapcube.estructura.Cubo;
 import olapcube.estructura.Dimension;
@@ -32,10 +33,9 @@ public class Proyeccion {
         
     }
 
-    public void seleccionarHecho(String hecho) {
-        this.hecho = hecho;
+    public void seleccionarHecho() {
+        this.hecho = SeleccionarHecho.getHecho();
     }
-
     public void seleccionarMedida(String medida) {
         this.medida = medida;
     }
