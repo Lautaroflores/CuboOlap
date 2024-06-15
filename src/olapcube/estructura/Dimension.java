@@ -2,82 +2,67 @@ package olapcube.estructura;
 
 import java.util.HashMap;
 import java.util.HashSet;
-
 import java.util.Map;
 import java.util.Set;
 
 import olapcube.configuration.ConfigDimension;
 
-
-/**
- * Clase que representa una dimension de un cubo OLAP.
- */
 public class Dimension {
-    private String nombre;                              // Nombre de la dimension
-    private Map<String, Set<Integer>> valoresToCeldas;  // Mapeo de valores de la dimensión a celdas en el cubo
-    private Map<Integer, String> idToValores;           // Mapeo de ids (pk) de la dimensión a valores
-    private int columnaFkHechos;  
-                          // Columna que contiene la clave foránea en la tabla de los hechos
-    
-  
+    private String nombre;
+    private Map<String, Set<Integer>> valoresToCeldas;
+    private Map<Integer, String> idToValores;
+    private int columnaFkHechos;
+    private String[] niveles;  // Jerarquía de niveles
+    private int nivelActual;   // Nivel actual en la jerarquía
+    private int[] columnasValores; // Columnas correspondientes a los niveles en el dataset
+    private ConfigDimension configDimension; // Configuración de la dimensión
 
-
-    /**
-     * Constructor de la clase
-     * 
-     * @param nombre Nombre de la dimension
-     */
-    private Dimension(String nombre) {
+    private Dimension(String nombre, String[] niveles, int[] columnasValores, ConfigDimension configDimension) {
         this.nombre = nombre;
-        valoresToCeldas = new HashMap<>();
-        idToValores = new HashMap<>();
+        this.valoresToCeldas = new HashMap<>();
+        this.idToValores = new HashMap<>();
+        this.niveles = niveles;
+        this.nivelActual = 0; // Inicialmente en el nivel más bajo (detalle)
+        this.columnasValores = columnasValores;
+        this.configDimension = configDimension;
     }
 
-    /**
-     * Método constructor que permite crear una dimensión a partir de una configuración
-     * 
-     * @param configDimension Configuración de la dimensión
-     * @return Dimension
-     */
     public static Dimension crear(ConfigDimension configDimension) {
-        Dimension dim = new Dimension(configDimension.getNombre());
+        String nombre = configDimension.getNombre();
+        String[] niveles = configDimension.getNiveles();
+        int[] columnasValores = configDimension.getColumnasValores();
+        Dimension dim = new Dimension(nombre, niveles, columnasValores, configDimension);
         dim.columnaFkHechos = configDimension.getColumnaFkHechos();
         for (String[] datos : configDimension.getDatasetReader().read()) {
             int pkDimension = Integer.parseInt(datos[configDimension.getColumnaKey()]);
-            String valor = datos[configDimension.getColumnaValor()];
+            String valor = datos[columnasValores[dim.nivelActual]];
             dim.idToValores.put(pkDimension, valor);
             dim.valoresToCeldas.put(valor, new HashSet<>());
         }
-
         return dim;
     }
 
     public Dimension copiar() {
-        Dimension nueva = new Dimension(this.nombre);
+        Dimension nueva = new Dimension(this.nombre, this.niveles, this.columnasValores, this.configDimension);
         nueva.valoresToCeldas = new HashMap<>();
         for (String valor : this.valoresToCeldas.keySet()) {
             nueva.valoresToCeldas.put(valor, this.valoresToCeldas.get(valor));
         }
-
         nueva.idToValores = this.idToValores;
-        nueva.columnaFkHechos = this.columnaFkHechos;  
-        
-
+        nueva.columnaFkHechos = this.columnaFkHechos;
+        nueva.nivelActual = this.nivelActual;
         return nueva;
     }
 
-    public void filtrar (String valor) {
+    public void filtrar(String valor) {
         filtrar(new String[] {valor});
     }
 
-
     public void filtrar(String[] valores) {
         HashMap<String, Set<Integer>> nuevosValores = new HashMap<>();
-        for (String valor: valores) {
-
+        for (String valor : valores) {
             nuevosValores.put(valor, valoresToCeldas.get(valor));
         }
-
         valoresToCeldas = nuevosValores;
     }
 
@@ -106,12 +91,10 @@ public class Dimension {
         return columnaFkHechos;
     }
 
-    /**
-     * Método que permite agregar un hecho a la dimensión
-     * 
-     * @param idValor id (pk) de la dimensión
-     * @param indiceCelda índice de la celda en el cubo
-     */
+    public String getNivelActual() {
+        return niveles[nivelActual];
+    }
+
     public void agregarHecho(int idValor, int indiceCelda) {
         if (!idToValores.containsKey(idValor)) {
             throw new IllegalArgumentException("El id " + idValor + " del valor no existe en la dimension " + nombre);
@@ -119,4 +102,32 @@ public class Dimension {
         valoresToCeldas.get(idToValores.get(idValor)).add(indiceCelda);
     }
 
+    public void rollUp() {
+        if (nivelActual > 0) {
+            nivelActual--;
+            actualizarValoresToCeldas();
+        } else {
+            System.out.println("No se puede hacer Roll-up, ya está en el nivel más alto.");
+        }
+    }
+
+    public void drillDown() {
+        if (nivelActual < niveles.length - 1) {
+            nivelActual++;
+            actualizarValoresToCeldas();
+        } else {
+            System.out.println("No se puede hacer Drill-down, ya está en el nivel más bajo.");
+        }
+    }
+
+    private void actualizarValoresToCeldas() {
+        valoresToCeldas.clear();
+        for (String[] datos : configDimension.getDatasetReader().read()) {
+            String valor = datos[columnasValores[nivelActual]];
+            int pkDimension = Integer.parseInt(datos[configDimension.getColumnaKey()]);
+            idToValores.put(pkDimension, valor);
+            valoresToCeldas.putIfAbsent(valor, new HashSet<>());
+            valoresToCeldas.get(valor).add(pkDimension);
+        }
+    }
 }

@@ -27,7 +27,7 @@ public class SeleccionarDimension {
         }
 
         // Muestra la proyección de la dimensión única
-        proyeccion.print(dimensionUnica);
+    
     }
     //Metodo para la proyección en 2D
     public void ejecutar(String dimensionPrincipal, String dimensionSecundaria) {
@@ -38,8 +38,5 @@ public class SeleccionarDimension {
             System.out.println("Dimensiones no válidas");
             return;
         }
-
-        // Muestra la proyección de la dimensión principal vs la dimensión secundaria
-        proyeccion.print(dimensionPrincipal, dimensionSecundaria);
     }
 }

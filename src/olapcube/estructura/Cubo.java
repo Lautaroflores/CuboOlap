@@ -1,6 +1,7 @@
 package olapcube.estructura;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -48,7 +49,8 @@ public class Cubo {
         }
 
         // Creacion de hechos
-        cubo.nombresHechos = List.of(config.getHechos().getNombresHechos());
+        cubo.nombresHechos = new ArrayList<>(Arrays.asList(config.getHechos().getNombresHechos()));
+
 
         int indiceCelda = 0;
         for (String[] datos : config.getHechos().getDatasetReader().read()) {
@@ -216,4 +218,3 @@ public class Cubo {
 
 }
   
-
