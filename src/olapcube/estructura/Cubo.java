@@ -216,5 +216,11 @@ public class Cubo {
         }
     }
 
+    public Double[] getValores(String hecho) {
+        return celdas.stream()
+                    .flatMap(celda -> celda.getValores(hecho).stream())
+                    .toArray(Double[]::new);
+    }
+
 }
   

@@ -2,11 +2,20 @@ package olapcube.acciones;
 
 import olapcube.configuration.ConfigHechos;
 import java.util.Scanner;
-
+/**
+ * Clase que representa la acción de seleccionar un hecho
+ */
 public class SeleccionarHecho {
-    private ConfigHechos configHechos;
-    private Scanner scanner;
-    private static String hecho;
+    private ConfigHechos configHechos; // Configuración de los hechos
+    private Scanner scanner; // Scanner para leer la entrada del usuario
+    private static String hecho; // Hecho seleccionado
+
+    /**
+     * Constructor de la clase
+     * 
+     * @param configHechos Configuración de los hechos
+     * @param scanner Scanner para leer la entrada del usuario
+     */
 
     public SeleccionarHecho(ConfigHechos configHechos, Scanner scanner) {
         this.configHechos = configHechos;

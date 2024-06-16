@@ -48,11 +48,14 @@ public class AppCubo {
                 }
                 cubo.setMedidas(medidaSeleccionada.getClass().getSimpleName().toLowerCase(), medidaSeleccionada);
                 System.out.println("Medida seleccionada: " + medidaSeleccionada.getClass().getSimpleName());
-                System.out.println("Seleccione lo que quiere probar:");
-                System.out.println("1. Proyección en 1D\n2. Proyección en 2D \n3. DrillDown \n4. RollUp \n5. Slice \n6. Dice");
+                System.out.println("Seleccione el numero de la acción que quiere probar:");
+                System.out.println("0. Proyección en 0D\n1. Proyección en 1D\n2. Proyección en 2D \n3. DrillDown \n4. RollUp \n5. Slice \n6. Dice");
                 int opcion = scanner.nextInt();
                 Proyeccion proyeccion = cubo.proyectar();
                 switch (opcion) {
+                    case 0:
+                        opciones.seleccionarCeroDimensiones(cubo, proyeccion);
+                        break;
                     case 1:
                         opciones.seleccionarUnaDimension(cubo, proyeccion);
                         break;

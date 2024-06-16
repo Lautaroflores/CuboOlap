@@ -7,6 +7,10 @@ import java.util.Set;
 
 import olapcube.configuration.ConfigDimension;
 
+/**
+ * Representa una dimensión de un cubo OLAP.
+ */
+
 public class Dimension {
     private String nombre;
     private Map<String, Set<Integer>> valoresToCeldas;

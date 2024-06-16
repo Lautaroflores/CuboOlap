@@ -3,7 +3,7 @@ package olapcube.metricas;
 import java.util.List;
 
 /**
- * Clase que representa una medida de suma
+ * Clase que representa la medida de suma de una lista de valores. (Extiende a Medida)
  */
 public class Suma extends Medida {
 

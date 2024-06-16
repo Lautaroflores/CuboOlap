@@ -6,11 +6,16 @@ import olapcube.Proyeccion;
 import olapcube.estructura.Cubo;
 import olapcube.estructura.Dimension;  
 
-
+/**
+ * Clase que representa la acción de Drill-Down, extiende a la clase Accion
+ */
 
 public class DrillDown extends Accion{
     
-
+    /**
+     * 
+     * @param cubo Cubo al que se le aplicará la acción
+     */
     public DrillDown(Cubo cubo) {
         this.cubo = cubo;
     }

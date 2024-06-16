@@ -7,8 +7,17 @@ import olapcube.Proyeccion;
 import olapcube.estructura.Cubo;
 import olapcube.estructura.Dimension;
 
+/**
+ * Clase que representa la acción de Slice, extiende a la clase Accion
+ */
 public class Slice extends Accion{
 
+    /**
+     * Constructor de la clase
+     * @param cubo Cubo sobre el que se aplicará la acción
+     * @param nombreDim Dimensión seleccionada para realizar la proyección
+     * @param valor Valor de la dimensión seleccionada
+     */
     public static Cubo slice(Cubo cuboOriginal, String nombreDim, String valor) {
         Cubo cubo = cuboOriginal.copiar();
         cubo.dimensiones.get(nombreDim).filtrar(valor);

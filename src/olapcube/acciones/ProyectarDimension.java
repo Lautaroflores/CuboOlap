@@ -1,14 +1,24 @@
 package olapcube.acciones;
 
 import java.util.Scanner;
-
 import olapcube.Proyeccion;
 import olapcube.estructura.Cubo;
 import olapcube.estructura.Dimension;
 
+/**
+ * Clase que representa la acción de proyectar una dimensión,
+ */
+
 public class ProyectarDimension {
-    private Scanner scanner;
-    private String[] dimensiones;
+    private Scanner scanner; // Scanner para leer la entrada del usuario
+    private String[] dimensiones; // Dimensiones válidas para realizar la proyección
+
+    /**
+     * Constructor de la clase
+     * 
+     * @param scanner Scanner para leer la entrada del usuario
+     * @param dimensiones Arreglo de dimensiones válidas para realizar la proyección
+     */
 
     public ProyectarDimension(Scanner scanner, String[] dimensiones) {
         this.scanner = scanner;

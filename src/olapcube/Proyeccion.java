@@ -1,6 +1,7 @@
 package olapcube;
 
 import java.util.Arrays;
+import java.util.List;
 
 import olapcube.acciones.SeleccionarHecho;
 import olapcube.estructura.Celda;
@@ -38,6 +39,26 @@ public class Proyeccion {
     }
     public void seleccionarMedida(String medida) {
         this.medida = medida;
+    }
+
+     public void printSinDimensiones() {
+        System.out.println("Proyeccion sin dimensiones - " + hecho + " (" + medida + ")");
+        
+        // Convertir el array de Double a una lista de Double
+        List<Double> valores = Arrays.asList(cubo.getValores(hecho));
+        Double valor = cubo.getMedida(medida).calcular(valores);
+        
+        System.out.printf(formatoCelda, separador);
+        System.out.printf(formatoCelda, hecho + " (" + medida + ")");
+        System.out.print(separador);
+        System.out.println();
+        System.out.println("---------------------------------");
+
+        System.out.printf(formatoCelda, "Total");
+        System.out.print(separador);
+        System.out.printf(formatoCelda, valor);
+        System.out.print(separador);
+        System.out.println();
     }
 
     /**

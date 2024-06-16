@@ -2,6 +2,10 @@ package olapcube.metricas;
 
 import java.util.List;
 
+/**
+ * Clase abstracta que calcula el valor máximo de una lista de valores. (Extiende a Medida)
+ */
+
 public class Maximo extends Medida {
 
     public Maximo() {

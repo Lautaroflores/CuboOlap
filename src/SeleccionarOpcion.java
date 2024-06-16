@@ -10,12 +10,20 @@ import olapcube.acciones.RollUp;
 import olapcube.acciones.Dice;
 import olapcube.acciones.DrillDown;
 
-
+/**
+ * Clase que permite seleccionar las acciones a realizar en el cubo OLAP.
+ */
 
 public class SeleccionarOpcion {
-    private Scanner scanner;
-    private ConfigHechos configHechos;
+    private Scanner scanner; // Scanner para leer la entrada del usuario
+    private ConfigHechos configHechos; // Configuración de los hechos
     
+    /**
+     * Constructor de la clase
+     * 
+     * @param scanner Scanner para leer la entrada del usuario
+     * @param configHechos Configuración de los hechos
+     */
     
     public SeleccionarOpcion(Scanner scanner) {
         this.scanner = scanner;
@@ -51,6 +59,12 @@ public class SeleccionarOpcion {
             default:
                 return null;
         }
+    }
+
+    // Método para seleccionar cero dimensiones
+    public void seleccionarCeroDimensiones(Cubo cubo, Proyeccion proyeccion) {
+        proyeccion.seleccionarHecho();
+        proyeccion.printSinDimensiones();
     }
 
     public void seleccionarUnaDimension(Cubo cubo, Proyeccion proyeccion) {

@@ -1,10 +1,9 @@
 package olapcube.acciones;
-
 import java.util.Scanner;
-
 import olapcube.Proyeccion;
 import olapcube.estructura.Cubo;
 import olapcube.estructura.Dimension;
+
 
 
 public class SeleccionarDimension {

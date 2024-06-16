@@ -1,5 +1,9 @@
 package olapcube.metricas;
 import java.util.List;
+
+/**
+ * Clase abstracta que calcula el valor mínimo de una lista de valores. (Extiende a Medida)
+ */
 public class Minimo extends Medida {
 
     public Minimo() {

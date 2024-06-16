@@ -7,11 +7,17 @@ import olapcube.Proyeccion;
 import olapcube.estructura.Cubo;
 import olapcube.estructura.Dimension;
 
+/**
+ * Clase que representa la acción de Dice, extiende a la clase Accion
+ */
 
 public class Dice extends Accion{
     
-    private String[] dimensiones = {"POS", "Fechas", "Productos"};
+    private String[] dimensiones = {"POS", "Fechas", "Productos"}; // Dimensiones válidas para realizar el Dice
 
+    /**
+    * @param dimensiones Arreglo de dimensiones válidas para realizar el Dice
+    */
     public Cubo dice (Cubo cuboOriginal, String nombreDim, String[] valores) {
 
         

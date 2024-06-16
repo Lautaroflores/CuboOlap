@@ -6,8 +6,16 @@ import olapcube.Proyeccion;
 import olapcube.estructura.Cubo;
 import olapcube.estructura.Dimension;
 
+/**
+ * Clase que representa la acción de Roll-Up, extiende a la clase Accion
+ */
+
 public class RollUp extends Accion{
 
+    /**
+     * Constructor de la clase
+     * @param cubo Cubo sobre el que se aplicará la acción
+     */
     
     public RollUp(Cubo cubo) {
         this.cubo = cubo;
