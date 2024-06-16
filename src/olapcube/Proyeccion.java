@@ -117,7 +117,6 @@ public class Proyeccion {
             System.out.printf(formatoCelda, indice[i]);
             System.out.print(separador);
             for (int j = 0; j < header.length; j++) {
-                // TODO: Formatear bien el valor de la celda
                 System.out.printf(formatoCelda, valores[i][j]);
                 System.out.print(separador);
             }
@@ -126,4 +125,5 @@ public class Proyeccion {
 
     
     }
+    
 }

@@ -1,10 +1,16 @@
 package olapcube.acciones;
 
-import olapcube.estructura.Cubo;
+import java.util.Arrays;
+import java.util.Scanner;
 
-public class Dice {
+import olapcube.Proyeccion;
+import olapcube.estructura.Cubo;
+import olapcube.estructura.Dimension;
+
+
+public class Dice extends Accion{
     
- 
+    private String[] dimensiones = {"POS", "Fechas", "Productos"};
 
     public Cubo dice (Cubo cuboOriginal, String nombreDim, String[] valores) {
 
@@ -35,5 +41,69 @@ public class Dice {
         cubo.dimensiones.get(nombreDim3).filtrar(valores3);    
 
         return cubo;
+    }
+    @Override
+    public void ejecutar(Cubo cubo, Proyeccion proyeccion) {
+            try{
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Ingrese la dimensión para realizar el Dice:");
+            System.out.println("1. POS, 2. Fechas, 3. Productos");
+            int dimDice = scanner.nextInt();
+            scanner.nextLine();
+            Dimension dimSeleccionada = cubo.getDimension(dimensiones[dimDice - 1]);
+            
+            System.out.println("Ingrese los valores específicos para la dimensión " + dimensiones[dimDice - 1] + " separados por comas:");
+            if (dimSeleccionada != null) {
+                System.out.println("Valores únicos de la dimensión " + dimensiones[dimDice - 1] + ": " + Arrays.toString(dimSeleccionada.getValores()));
+            } else {
+                System.out.println("Dimension no válida");
+                scanner.close();
+                return;
+            }
+        
+            String valores = scanner.nextLine();
+            String[] valoresSeleccionados = valores.split(",");
+            
+            boolean valoresValidos = Arrays.stream(valoresSeleccionados).allMatch(valor -> Arrays.asList(dimSeleccionada.getValores()).contains(valor.trim()));
+        
+            if (!valoresValidos) {
+                System.out.println("Alguno de los valores ingresados no es válido.");
+                scanner.close();
+                return;
+            }
+            
+            cubo.filtrarDimension(dimensiones[dimDice - 1], valoresSeleccionados);
+        
+            System.out.println("Dimensión secundaria (1. POS, 2. Fechas, 3. Productos):");
+            int dim2 = scanner.nextInt();
+            scanner.nextLine();
+        
+            System.out.println("Ingrese los valores específicos para la dimensión " + dimensiones[dim2 - 1] + " separados por comas:");
+            Dimension dimSeleccionada2 = cubo.getDimension(dimensiones[dim2 - 1]);
+            if (dimSeleccionada2 != null) {
+                System.out.println("Valores únicos de la dimensión " + dimensiones[dim2 - 1] + ": " + Arrays.toString(dimSeleccionada2.getValores()));
+            } else {
+                System.out.println("Dimension no válida");
+                scanner.close();
+                return;
+            }
+        
+            String valores2 = scanner.nextLine();
+            String[] valoresSeleccionados2 = valores2.split(",");
+        
+            boolean valoresValidos2 = Arrays.stream(valoresSeleccionados2).allMatch(valor -> Arrays.asList(dimSeleccionada2.getValores()).contains(valor.trim()));
+        
+            if (!valoresValidos2) {
+                System.out.println("Alguno de los valores ingresados no es válido.");
+                scanner.close();
+                return;
+            }
+            proyeccion.seleccionarHecho();
+            cubo.filtrarDimension(dimensiones[dim2 - 1], valoresSeleccionados2);
+            cubo.proyectar().print(dimensiones[dimDice - 1], dimensiones[dim2 - 1]);
+        
+        } catch (Exception e) {
+            System.out.println("Error al realizar Dice");
+        }
     }
 }

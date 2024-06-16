@@ -29,7 +29,7 @@ public class AppCubo {
     public static void main(String[] args) {
         try {
             Scanner scanner = new Scanner(System.in);
-            Opciones opciones = new Opciones(scanner);
+            SeleccionarOpcion opciones = new SeleccionarOpcion(scanner);
 
             
             ConfigCubo config = crearConfigCubo();

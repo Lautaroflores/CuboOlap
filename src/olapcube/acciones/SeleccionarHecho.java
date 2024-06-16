@@ -32,7 +32,7 @@ public class SeleccionarHecho {
     
         if (hechoSeleccionado != null) {
             System.out.println("Trabajando con el hecho '" + hechoSeleccionado + "' en la columna " + columnaSeleccionada);
-            this.hecho = hechoSeleccionado; // Assign the selected hecho to the instance variable
+            hecho = hechoSeleccionado; 
         } else {
             System.out.println("Número de columna no válido.");
         }
