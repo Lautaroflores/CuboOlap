@@ -37,9 +37,7 @@ public class Proyeccion {
     public void seleccionarHecho() {
         this.hecho = SeleccionarHecho.getHecho();
     }
-    public void seleccionarMedida(String medida) {
-        this.medida = medida;
-    }
+    
 
      public void printSinDimensiones() {
         System.out.println("Proyeccion sin dimensiones - " + hecho + " (" + medida + ")");

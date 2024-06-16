@@ -6,6 +6,7 @@ import olapcube.configuration.ConfigHechos;
 import olapcube.estructura.Cubo;
 import olapcube.metricas.*;
 
+
 public class AppCubo {
     private static final String[] NOMBRES_HECHOS = new String[] {"cantidad", "valor_unitario", "valor_total", "costo"};
     private static final Integer[] COLUMNAS_HECHOS = new Integer[] {3, 4, 5, 6};
@@ -31,7 +32,6 @@ public class AppCubo {
             Scanner scanner = new Scanner(System.in);
             SeleccionarOpcion opciones = new SeleccionarOpcion(scanner);
 
-            
             ConfigCubo config = crearConfigCubo();
             
             Cubo cubo = Cubo.crearFromConfig(config);
